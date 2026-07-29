@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-os",
+  "version": "2.0.0",
+  "description": "Interactive portfolio in retro OS style",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  }
+}

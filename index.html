@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Kateryna Havryliuk · Portfolio OS v2.0</title>
+    <meta name="description" content="Kateryna Havryliuk — CS student, Python/AI Developer. Interactive portfolio in retro OS style.">
+    <meta name="keywords" content="Kateryna Havryliuk, portfolio, Python, AI, developer, CS student">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- CRT Effects -->
+    <div class="retro-crt"></div>
+    <div class="retro-scanline"></div>
+
+    <!-- Boot Screen -->
+    <div class="boot-screen" id="bootScreen">
+        <div class="boot-content">
+            <pre class="boot-ascii">
+    ╔═══════════════════════════════════════════════════════╗
+    ║          KATERINA HAVRYLIUK · OS/CS v2.0              ║
+    ╠═══════════════════════════════════════════════════════╣
+    ║              LOADING SYSTEM FILES...                  ║
+    ╚═══════════════════════════════════════════════════════╝</pre>
+            <div class="boot-progress"><div class="boot-progress-bar" id="bootProgress"></div></div>
+            <div class="boot-text" id="bootText">Initializing kernel...</div>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div class="desktop" id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons" id="desktopIcons"></div>
+
+        <!-- Windows Container -->
+        <div class="windows-container" id="windowsContainer"></div>
+
+        <!-- Taskbar -->
+        <div class="taskbar" id="taskbar">
+            <div class="start-button" id="startButton"><span class="start-icon">🖥️</span><span>START</span></div>
+            <div class="taskbar-items" id="taskbarItems"></div>
+            <div class="taskbar-tray">
+                <div class="tray-icon" id="themeTray">🎨</div>
+                <div class="tray-icon" id="clipboardTray">📋</div>
+                <div class="taskbar-clock" id="taskbarClock">00:00</div>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div class="start-menu" id="startMenu">
+            <div class="start-menu-header"><span class="start-menu-icon">🖥️</span><span>KATERINA OS/CS v2.0</span></div>
+            <div class="start-menu-items" id="startMenuItems"></div>
+        </div>
+
+        <!-- Theme Menu -->
+        <div class="theme-menu" id="themeMenu">
+            <div class="theme-option" data-theme="classic">🖥️ Windows 95 Classic</div>
+            <div class="theme-option" data-theme="matrix">💚 Matrix Green</div>
+            <div class="theme-option" data-theme="dark">🌙 Dark Mode</div>
+            <div class="theme-option" data-theme="willow">🌿 Willow</div>
+        </div>
+
+        <!-- Toast -->
+        <div class="clipboard-toast" id="clipboardToast">📋 Copied!</div>
+    </div>
+
+    <!-- Quality & Font Controls -->
+    <button class="quality-btn" id="qualityBtn" title="Toggle CRT effects">📺 <span id="qualityText">HD</span></button>
+    <div class="font-size-controls" id="fontSizeControls">
+        <button class="font-btn" data-size="small" title="Small font">A-</button>
+        <button class="font-btn active" data-size="medium" title="Medium font">A</button>
+        <button class="font-btn" data-size="large" title="Large font">A+</button>
+        <button class="font-btn" data-size="xlarge" title="Extra large font">A++</button>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

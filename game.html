@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Pixel Pet - Virtual Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Nunito:wght@400;600;700;800&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --pastel-pink: #f3c6ff;
+            --pastel-lavender: #e6d5ff;
+            --pastel-blue: #cde7ff;
+            --pastel-mint: #b8f2d6;
+            --pastel-cream: #fff5e6;
+            --pastel-rose: #ffd6e0;
+            --pastel-peach: #ffccb3;
+            --pastel-yellow: #fff9c4;
+            --dark-purple: #8b7aa8;
+            --dark-pink: #c77dff;
+            --text-dark: #5a4a6a;
+            --shadow-soft: rgba(139, 122, 168, 0.3);
+            --night-bg: #2d3a5a;
+            --night-sky: #1a1f3a;
+        }
+        
+        body {
+            font-family: 'Nunito', 'Comfortaa', sans-serif;
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        body.night-mode {
+            background: transparent;
+        }
+        
+        /* Main Device Container */
+        .device {
+            width: 280px;
+            background: linear-gradient(145deg, #fff9fb, var(--pastel-cream));
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 
+                0 15px 40px var(--shadow-soft),
+                inset 0 2px 8px rgba(255,255,255,0.8),
+                0 0 0 6px var(--pastel-pink),
+                0 0 0 10px var(--pastel-rose);
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        
+        body.night-mode .device {
+            background: linear-gradient(145deg, #3d4a6a, #2d3a5a);
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.5),
+                inset 0 2px 8px rgba(255,255,255,0.1),
+                0 0 0 6px #5a4a8a,
+                0 0 0 10px #4a3a7a;
+        }
+        
+        /* Device Header */
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .device-title {
+            font-family: 'Comfortaa', cursive;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-purple);
+            text-shadow: 1px 1px 0 var(--pastel-pink);
+            letter-spacing: 1px;
+        }
+        
+        body.night-mode .device-title {
+            color: #e6d5ff;
+            text-shadow: 1px 1px 0 #5a4a8a;
+        }
+        
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            gap: 3px;
+            background: var(--pastel-lavender);
+            padding: 3px;
+            border-radius: 15px;
+            border: 2px solid var(--dark-purple);
+        }
+        
+        body.night-mode .lang-toggle {
+            background: #4a4a6a;
+            border-color: #6a6a8a;
+        }
+        
+        .lang-btn {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            padding: 4px 8px;
+            border: none;
+            background: transparent;
+            color: var(--dark-purple);
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        body.night-mode .lang-btn {
+            color: #d5d5e5;
+        }
+        
+        .lang-btn.active {
+            background: var(--pastel-pink);
+            color: white;
+            box-shadow: 0 2px 6px rgba(199, 125, 255, 0.4);
+        }
+        
+        body.night-mode .lang-btn.active {
+            background: #8b7aa8;
+            color: white;
+        }
+        
+        /* Pet Name Display */
+        .pet-name-display {
+            text-align: center;
+            margin-bottom: 8px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark-purple);
+        }
+        
+        body.night-mode .pet-name-display {
+            color: #e6d5ff;
+        }
+        
+        /* Screen Container */
+        .screen {
+            background: linear-gradient(180deg, #e8f4ff 0%, #d4f1f4 100%);
+            border-radius: 15px;
+            padding: 12px;
+            border: 3px solid var(--dark-purple);
+            box-shadow: inset 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .screen.night {
+            background: linear-gradient(180deg, #1a1f3a 0%, #0f1729 100%);
+            border-color: #4a4a6a;
+        }
+        
+        /* Background Scene */
+        .scene {
+            position: relative;
+            height: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 15px;
+        }
+        
+        /* Stars for night mode */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .screen.night .stars {
+            opacity: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Moon */
+        .moon {
+            position: absolute;
+            top: 12px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            background: #fff9c4;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 249, 196, 0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .screen.night .moon {
+            opacity: 1;
+        }
+        
+        /* Grass */
+        .grass {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(180deg, var(--pastel-mint) 0%, #9eebc0 100%);
+            border-radius: 0 0 12px 12px;
+            transition: all 0.5s ease;
+        }
+        
+        .screen.night .grass {
+            background: linear-gradient(180deg, #2d5a4a 0%, #1a3a2a 100%);
+        }
+        
+        .grass::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 6px,
+                #7dd3a8 6px,
+                #7dd3a8 8px
+            );
+            opacity: 0.5;
+        }
+        
+        /* Tree */
+        .tree {
+            position: absolute;
+            right: 15px;
+            bottom: 20px;
+            width: 28px;
+            height: 42px;
+        }
+        
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 18px;
+            background: #c4a77d;
+            border-radius: 2px;
+        }
+        
+        .screen.night .tree-trunk {
+            background: #5a4a3a;
+        }
+        
+        .tree-leaves {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #a8d5a2;
+            border-radius: 50%;
+            box-shadow: 
+                -7px 4px 0 -4px #9bc995,
+                7px 4px 0 -4px #9bc995,
+                0 -6px 0 -4px #b8e0b3;
+            transition: all 0.5s ease;
+        }
+        
+        .screen.night .tree-leaves {
+            background: #3a5a4a;
+            box-shadow: 
+                -7px 4px 0 -4px #2d4a3a,
+                7px 4px 0 -4px #2d4a3a,
+                0 -6px 0 -4px #3d5a4d;
+        }
+        
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 15px;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+        
+        .screen.night .cloud {
+            opacity: 0.1;
+        }
+        
+        .cloud1 {
+            width: 30px;
+            height: 15px;
+            top: 12px;
+            left: 12px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .cloud2 {
+            width: 22px;
+            height: 11px;
+            top: 28px;
+            right: 20px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+        
+        /* Pixel Pet Container */
+        .pet-container {
+            position: relative;
+            z-index: 10;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .pet {
+            width: 70px;
+            height: 70px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Stats Panel */
+        .stats-panel {
+            background: linear-gradient(145deg, var(--pastel-rose), var(--pastel-pink));
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid var(--dark-purple);
+            transition: all 0.5s ease;
+        }
+        
+        body.night-mode .stats-panel {
+            background: linear-gradient(145deg, #4a4a6a, #3d3d5a);
+            border-color: #6a6a8a;
+        }
+        
+        .stat-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 6px;
+        }
+        
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stat-label {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-dark);
+            width: 70px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        body.night-mode .stat-label {
+            color: #d5d5e5;
+        }
+        
+        .stat-bar-container {
+            flex: 1;
+            height: 14px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 7px;
+            overflow: hidden;
+            border: 2px solid var(--dark-purple);
+        }
+        
+        body.night-mode .stat-bar-container {
+            background: rgba(0,0,0,0.3);
+            border-color: #6a6a8a;
+        }
+        
+        .stat-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .stat-bar.hunger {
+            background: linear-gradient(90deg, #ffb3ba, #ff6b9d);
+        }
+        
+        .stat-bar.happiness {
+            background: linear-gradient(90deg, #ffffba, #ffd93d);
+        }
+        
+        .stat-bar.energy {
+            background: linear-gradient(90deg, #baffc9, #6bcf7f);
+        }
+        
+        .stat-value {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text-dark);
+            min-width: 28px;
+            text-align: right;
+        }
+        
+        body.night-mode .stat-value {
+            color: #e6d5ff;
+        }
+        
+        /* Control Panel */
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 12px;
+            gap: 6px;
+        }
+        
+        .control-btn {
+            flex: 1;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(145deg, var(--pastel-lavender), var(--pastel-blue));
+            border: 2px solid var(--dark-purple);
+            border-radius: 10px;
+            padding: 8px 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            box-shadow: 0 3px 0 var(--dark-purple);
+        }
+        
+        body.night-mode .control-btn {
+            border-color: #6a6a8a;
+            box-shadow: 0 3px 0 #4a4a6a;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 var(--dark-purple);
+        }
+        
+        body.night-mode .control-btn:hover {
+            box-shadow: 0 5px 0 #4a4a6a;
+        }
+        
+        .control-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0 0 var(--dark-purple);
+        }
+        
+        .control-btn .icon {
+            font-size: 20px;
+        }
+        
+        .control-btn .label {
+            font-size: 10px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+        
+        body.night-mode .control-btn .label {
+            color: #d5d5e5;
+        }
+        
+        .control-btn.feed {
+            background: linear-gradient(145deg, #ffd6e0, #ffb3c1);
+        }
+        
+        .control-btn.play {
+            background: linear-gradient(145deg, #fff5ba, #ffe066);
+        }
+        
+        .control-btn.rest {
+            background: linear-gradient(145deg, #c7f0ff, #a8e6cf);
+        }
+        
+        /* Нова кнопка Reset */
+        .control-btn.reset {
+            background: linear-gradient(145deg, #e0d5ff, #cbb8ff);
+        }
+        
+        body.night-mode .control-btn.reset {
+            background: linear-gradient(145deg, #5a5a7a, #4a4a6a);
+        }
+        
+        body.night-mode .control-btn.reset .label {
+            color: #d5d5e5;
+        }
+        
+        /* Pet Reactions */
+        .pet-container.eating {
+            animation: munch 0.5s ease-in-out 3;
+        }
+        
+        .pet-container.playing {
+            animation: jump 0.6s ease-in-out 2;
+        }
+        
+        .pet-container.sleeping {
+            animation: sleep 2s ease-in-out infinite;
+        }
+        
+        @keyframes munch {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(-5deg); }
+        }
+        
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            25% { transform: translateY(-15px) rotate(-10deg); }
+            75% { transform: translateY(-15px) rotate(10deg); }
+        }
+        
+        @keyframes sleep {
+            0%, 100% { transform: scale(1) rotate(0); }
+            50% { transform: scale(0.95) rotate(2deg); }
+        }
+        
+        /* Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 16px;
+            pointer-events: none;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(1.5);
+            }
+        }
+        
+        /* Zzz Animation */
+        .zzz {
+            position: absolute;
+            color: #a8a8d5;
+            font-size: 14px;
+            pointer-events: none;
+            animation: floatZ 2s ease-out forwards;
+            right: -8px;
+            top: 0;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+        }
+        
+        @keyframes floatZ {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(15px, -30px) scale(1.3);
+            }
+        }
+        
+        /* Status Message */
+        .status-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.95);
+            padding: 8px 16px;
+            border-radius: 15px;
+            border: 2px solid var(--pastel-pink);
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text-dark);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            white-space: nowrap;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+        }
+        
+        /* Setup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal {
+            background: linear-gradient(145deg, #fff9fb, var(--pastel-cream));
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 300px;
+            border: 3px solid var(--pastel-pink);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .modal h2 {
+            font-family: 'Comfortaa', cursive;
+            color: var(--dark-purple);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .pet-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .pet-option {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--pastel-lavender);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 8px;
+        }
+        
+        .pet-option:hover, .pet-option.selected {
+            border-color: var(--dark-pink);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(199, 125, 255, 0.3);
+        }
+        
+        .pet-option svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .name-input-container {
+            margin-bottom: 15px;
+        }
+        
+        .name-input-container label {
+            display: block;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        
+        .name-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--pastel-lavender);
+            border-radius: 12px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+        
+        .name-input:focus {
+            outline: none;
+            border-color: var(--dark-pink);
+        }
+        
+        .start-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, var(--pastel-pink), var(--dark-pink));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(199, 125, 255, 0.4);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .start-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Food Selection Modal */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .food-option {
+            padding: 10px 5px;
+            border: 2px solid var(--pastel-lavender);
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .food-option:hover {
+            border-color: var(--dark-pink);
+            transform: scale(1.05);
+        }
+        
+        .food-option .food-icon {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+        
+        .food-option .food-name {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 400px) {
+            .device {
+                width: 260px;
+                padding: 12px;
+            }
+            
+            .control-btn .label {
+                font-size: 9px;
+            }
+            
+            .pet {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .scene {
+                height: 120px;
+            }
+            
+            .control-btn {
+                padding: 6px 3px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .control-btn .icon {
+                font-size: 16px;
+            }
+            .control-btn .label {
+                font-size: 7px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Setup Modal -->
+    <div class="modal-overlay" id="setupModal">
+        <div class="modal">
+            <h2 data-i18n="choosePet">Choose Your Pet</h2>
+            <div class="pet-selector">
+                <div class="pet-option selected" data-pet="bunny" onclick="selectPet('bunny')">
+                    <svg viewBox="0 0 21 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="12" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="7" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="13" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="4" y="5" width="13" height="10" fill="#9a9a9a"/>
+                        <rect x="3" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="17" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="5" y="15" width="11" height="1" fill="#9a9a9a"/>
+                        <rect x="6" y="8" width="2" height="3" fill="#ffffff"/>
+                        <rect x="13" y="8" width="2" height="3" fill="#ffffff"/>
+                        <rect x="7" y="9" width="1" height="2" fill="#333333"/>
+                        <rect x="14" y="9" width="1" height="2" fill="#333333"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="14" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="10" y="11" width="1" height="1" fill="#333333"/>
+                        <rect x="5" y="16" width="11" height="7" fill="#9a9a9a"/>
+                        <rect x="4" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="16" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="8" y="17" width="5" height="5" fill="#d4d4d4"/>
+                        <rect x="6" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="12" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="3" y="18" width="2" height="2" fill="#9a9a9a"/>
+                        <rect x="16" y="18" width="2" height="2" fill="#9a9a9a"/>
+                    </svg>
+                </div>
+                <div class="pet-option" data-pet="cat" onclick="selectPet('cat')">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="14" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="3" y="4" width="14" height="12" fill="#ffa500"/>
+                        <rect x="5" y="6" width="2" height="2" fill="#ffffff"/>
+                        <rect x="11" y="6" width="2" height="2" fill="#ffffff"/>
+                        <rect x="6" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="12" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="8" y="9" width="4" height="2" fill="#ffb3c1"/>
+                        <rect x="9" y="10" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="13" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="4" y="16" width="4" height="2" fill="#ffa500"/>
+                        <rect x="12" y="16" width="4" height="2" fill="#ffa500"/>
+                    </svg>
+                </div>
+                <div class="pet-option" data-pet="bear" onclick="selectPet('bear')">
+                    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="14" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="3" y="5" width="14" height="13" fill="#a08060"/>
+                        <rect x="5" y="7" width="2" height="2" fill="#000000"/>
+                        <rect x="11" y="7" width="2" height="2" fill="#000000"/>
+                        <rect x="6" y="8" width="1" height="1" fill="#ffffff"/>
+                        <rect x="12" y="8" width="1" height="1" fill="#ffffff"/>
+                        <rect x="8" y="10" width="4" height="2" fill="#6b5344"/>
+                        <rect x="7" y="12" width="6" height="3" fill="#ffb3c1"/>
+                        <rect x="4" y="16" width="4" height="3" fill="#8b6f47"/>
+                        <rect x="12" y="16" width="4" height="3" fill="#8b6f47"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="name-input-container">
+                <label data-i18n="petName">Pet Name:</label>
+                <input type="text" class="name-input" id="petNameInput" placeholder="Enter name..." maxlength="12">
+            </div>
+            <button class="start-btn" onclick="startGame()" data-i18n="start">Start</button>
+        </div>
+    </div>
+
+    <!-- Food Selection Modal -->
+    <div class="modal-overlay hidden" id="foodModal">
+        <div class="modal">
+            <h2 data-i18n="chooseFood">Choose Food</h2>
+            <div class="food-grid">
+                <div class="food-option" onclick="selectFood('apple', 15)">
+                    <div class="food-icon">🍎</div>
+                    <div class="food-name" data-i18n="apple">Apple</div>
+                </div>
+                <div class="food-option" onclick="selectFood('carrot', 20)">
+                    <div class="food-icon">🥕</div>
+                    <div class="food-name" data-i18n="carrot">Carrot</div>
+                </div>
+                <div class="food-option" onclick="selectFood('cookie', 25)">
+                    <div class="food-icon">🍪</div>
+                    <div class="food-name" data-i18n="cookie">Cookie</div>
+                </div>
+                <div class="food-option" onclick="selectFood('fish', 30)">
+                    <div class="food-icon">🐟</div>
+                    <div class="food-name" data-i18n="fish">Fish</div>
+                </div>
+                <div class="food-option" onclick="selectFood('pizza', 35)">
+                    <div class="food-icon">🍕</div>
+                    <div class="food-name" data-i18n="pizza">Pizza</div>
+                </div>
+                <div class="food-option" onclick="selectFood('cake', 40)">
+                    <div class="food-icon">🍰</div>
+                    <div class="food-name" data-i18n="cake">Cake</div>
+                </div>
+            </div>
+            <button class="start-btn" onclick="closeFoodModal()" data-i18n="cancel">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Main Game -->
+    <div class="device">
+        <!-- Header -->
+        <div class="device-header">
+            <h1 class="device-title" data-i18n="title">PIXEL PET</h1>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="setLanguage('ua')">UA</button>
+            </div>
+        </div>
+        
+        <!-- Pet Name -->
+        <div class="pet-name-display" id="petNameDisplay">Bunny</div>
+        
+        <!-- Screen -->
+        <div class="screen" id="screen">
+            <div class="stars" id="stars"></div>
+            <div class="moon"></div>
+            <div class="scene">
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+                <div class="tree">
+                    <div class="tree-trunk"></div>
+                    <div class="tree-leaves"></div>
+                </div>
+                <div class="grass"></div>
+                
+                <!-- Pet -->
+                <div class="pet-container" id="petContainer">
+                    <svg class="pet" id="petSvg" viewBox="0 0 21 24" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Default Bunny -->
+                    </svg>
+                </div>
+                
+                <div class="status-message" id="statusMessage"></div>
+            </div>
+        </div>
+        
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <div class="stat-row">
+                <span class="stat-label">
+                    <span>🍖</span>
+                    <span data-i18n="hunger">Hunger</span>
+                </span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar hunger" id="hungerBar" style="width: 70%"></div>
+                </div>
+                <span class="stat-value" id="hungerValue">70</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">
+                    <span>😊</span>
+                    <span data-i18n="happiness">Happy</span>
+                </span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar happiness" id="happinessBar" style="width: 80%"></div>
+                </div>
+                <span class="stat-value" id="happinessValue">80</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">
+                    <span>⚡</span>
+                    <span data-i18n="energy">Energy</span>
+                </span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar energy" id="energyBar" style="width: 60%"></div>
+                </div>
+                <span class="stat-value" id="energyValue">60</span>
+            </div>
+        </div>
+        
+        <!-- Controls (додано кнопку Reset) -->
+        <div class="controls">
+            <button class="control-btn feed" onclick="openFoodModal()">
+                <span class="icon">🍽️</span>
+                <span class="label" data-i18n="feed">Feed</span>
+            </button>
+            <button class="control-btn play" onclick="playWithPet()">
+                <span class="icon">🎾</span>
+                <span class="label" data-i18n="play">Play</span>
+            </button>
+            <button class="control-btn rest" onclick="restPet()">
+                <span class="icon">🌙</span>
+                <span class="label" data-i18n="rest">Rest</span>
+            </button>
+            <button class="control-btn reset" onclick="resetGame()">
+                <span class="icon">🔄</span>
+                <span class="label" data-i18n="reset">Reset</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const state = {
+            hunger: 70,
+            happiness: 80,
+            energy: 60,
+            language: 'en',
+            selectedPet: 'bunny',
+            petName: '',
+            isSleeping: false,
+            selectedFood: null,
+            foodValue: 0
+        };
+
+        // Pet SVGs
+        const petSvgs = {
+            bunny: {
+                awake: `<rect x="6" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="12" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="7" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="13" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="4" y="5" width="13" height="10" fill="#9a9a9a"/>
+                        <rect x="3" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="17" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="5" y="15" width="11" height="1" fill="#9a9a9a"/>
+                        <rect x="6" y="8" width="2" height="3" fill="#ffffff"/>
+                        <rect x="13" y="8" width="2" height="3" fill="#ffffff"/>
+                        <rect x="7" y="9" width="1" height="2" fill="#333333"/>
+                        <rect x="14" y="9" width="1" height="2" fill="#333333"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="14" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="10" y="11" width="1" height="1" fill="#333333"/>
+                        <rect x="5" y="16" width="11" height="7" fill="#9a9a9a"/>
+                        <rect x="4" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="16" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="8" y="17" width="5" height="5" fill="#d4d4d4"/>
+                        <rect x="6" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="12" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="3" y="18" width="2" height="2" fill="#9a9a9a"/>
+                        <rect x="16" y="18" width="2" height="2" fill="#9a9a9a"/>`,
+                sleep: `<rect x="6" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="12" y="0" width="3" height="6" fill="#9a9a9a"/>
+                        <rect x="7" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="13" y="1" width="1" height="4" fill="#ffb3c1"/>
+                        <rect x="4" y="5" width="13" height="10" fill="#9a9a9a"/>
+                        <rect x="3" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="17" y="6" width="1" height="8" fill="#9a9a9a"/>
+                        <rect x="5" y="15" width="11" height="1" fill="#9a9a9a"/>
+                        <rect x="6" y="9" width="2" height="1" fill="#333333"/>
+                        <rect x="13" y="9" width="2" height="1" fill="#333333"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="14" y="11" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="10" y="11" width="1" height="1" fill="#333333"/>
+                        <rect x="5" y="16" width="11" height="7" fill="#9a9a9a"/>
+                        <rect x="4" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="16" y="17" width="1" height="5" fill="#9a9a9a"/>
+                        <rect x="8" y="17" width="5" height="5" fill="#d4d4d4"/>
+                        <rect x="6" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="12" y="22" width="3" height="2" fill="#9a9a9a"/>
+                        <rect x="3" y="18" width="2" height="2" fill="#9a9a9a"/>
+                        <rect x="16" y="18" width="2" height="2" fill="#9a9a9a"/>`
+            },
+            cat: {
+                awake: `<rect x="4" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="14" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="3" y="4" width="14" height="12" fill="#ffa500"/>
+                        <rect x="5" y="6" width="2" height="2" fill="#ffffff"/>
+                        <rect x="11" y="6" width="2" height="2" fill="#ffffff"/>
+                        <rect x="6" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="12" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="8" y="9" width="4" height="2" fill="#ffb3c1"/>
+                        <rect x="9" y="10" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="13" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="4" y="16" width="4" height="2" fill="#ffa500"/>
+                        <rect x="12" y="16" width="4" height="2" fill="#ffa500"/>`,
+                sleep: `<rect x="4" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="14" y="2" width="2" height="3" fill="#ffa500"/>
+                        <rect x="3" y="4" width="14" height="12" fill="#ffa500"/>
+                        <rect x="6" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="12" y="7" width="1" height="1" fill="#000000"/>
+                        <rect x="8" y="9" width="4" height="2" fill="#ffb3c1"/>
+                        <rect x="9" y="10" width="2" height="1" fill="#ff6b9d"/>
+                        <rect x="5" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="13" y="11" width="2" height="1" fill="#ffffff"/>
+                        <rect x="4" y="16" width="4" height="2" fill="#ffa500"/>
+                        <rect x="12" y="16" width="4" height="2" fill="#ffa500"/>`
+            },
+            bear: {
+                awake: `<rect x="2" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="14" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="3" y="5" width="14" height="13" fill="#a08060"/>
+                        <rect x="5" y="7" width="2" height="2" fill="#000000"/>
+                        <rect x="11" y="7" width="2" height="2" fill="#000000"/>
+                        <rect x="6" y="8" width="1" height="1" fill="#ffffff"/>
+                        <rect x="12" y="8" width="1" height="1" fill="#ffffff"/>
+                        <rect x="8" y="10" width="4" height="2" fill="#6b5344"/>
+                        <rect x="7" y="12" width="6" height="3" fill="#ffb3c1"/>
+                        <rect x="4" y="16" width="4" height="3" fill="#8b6f47"/>
+                        <rect x="12" y="16" width="4" height="3" fill="#8b6f47"/>`,
+                sleep: `<rect x="2" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="14" y="2" width="4" height="4" fill="#8b6f47"/>
+                        <rect x="3" y="5" width="14" height="13" fill="#a08060"/>
+                        <rect x="6" y="8" width="1" height="1" fill="#000000"/>
+                        <rect x="12" y="8" width="1" height="1" fill="#000000"/>
+                        <rect x="8" y="10" width="4" height="2" fill="#6b5344"/>
+                        <rect x="7" y="12" width="6" height="3" fill="#ffb3c1"/>
+                        <rect x="4" y="16" width="4" height="3" fill="#8b6f47"/>
+                        <rect x="12" y="16" width="4" height="3" fill="#8b6f47"/>`
+            }
+        };
+
+        // Translations (додано reset)
+        const translations = {
+            en: {
+                title: 'PIXEL PET',
+                choosePet: 'Choose Your Pet',
+                petName: 'Pet Name:',
+                start: 'Start',
+                hunger: 'Hunger',
+                happiness: 'Happy',
+                energy: 'Energy',
+                feed: 'Feed',
+                play: 'Play',
+                rest: 'Rest',
+                reset: 'Reset',
+                chooseFood: 'Choose Food',
+                apple: 'Apple',
+                carrot: 'Carrot',
+                cookie: 'Cookie',
+                fish: 'Fish',
+                pizza: 'Pizza',
+                cake: 'Cake',
+                cancel: 'Cancel',
+                msgFeed: 'Yum! Delicious!',
+                msgPlay: 'So fun! Yay!',
+                msgRest: 'Zzz... Sleepy...',
+                msgReset: 'Game reset! Welcome back!',
+                lowHunger: 'I\'m hungry!',
+                lowHappy: 'I\'m bored!',
+                lowEnergy: 'I\'m tired!'
+            },
+            ua: {
+                title: 'ПІКСЕЛЬНИЙ УЛЮБЛЕНЕЦЬ',
+                choosePet: 'Обери свого улюбленця',
+                petName: "Ім'я улюбленця:",
+                start: 'Почати',
+                hunger: 'Голод',
+                happiness: 'Радість',
+                energy: 'Енергія',
+                feed: 'Годувати',
+                play: 'Грати',
+                rest: 'Спати',
+                reset: 'Скинути',
+                chooseFood: 'Обери їжу',
+                apple: 'Яблуко',
+                carrot: 'Морква',
+                cookie: 'Печиво',
+                fish: 'Рибка',
+                pizza: 'Піца',
+                cake: 'Тортик',
+                cancel: 'Скасувати',
+                msgFeed: 'Смачно! Ням!',
+                msgPlay: 'Весело! Ура!',
+                msgRest: 'Ззз... Сонно...',
+                msgReset: 'Гру скинуто! Ласкаво просимо назад!',
+                lowHunger: 'Я голодний!',
+                lowHappy: 'Мені нудно!',
+                lowEnergy: 'Я втомився!'
+            }
+        };
+
+        // Initialize stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 60 + '%';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Pet Selection
+        function selectPet(pet) {
+            state.selectedPet = pet;
+            document.querySelectorAll('.pet-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`[data-pet="${pet}"]`).classList.add('selected');
+        }
+
+        // Language Switcher
+        function setLanguage(lang) {
+            state.language = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', 
+                    (lang === 'en' && btn.textContent === 'EN') ||
+                    (lang === 'ua' && btn.textContent === 'UA')
+                );
+            });
+            updateText();
+        }
+
+        function updateText() {
+            const t = translations[state.language];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        // Start Game
+        function startGame() {
+            const nameInput = document.getElementById('petNameInput').value.trim();
+            state.petName = nameInput || (state.selectedPet === 'bunny' ? 'Bunny' : state.selectedPet === 'cat' ? 'Kitty' : 'Bear');
+            document.getElementById('petNameDisplay').textContent = state.petName;
+            document.getElementById('setupModal').classList.add('hidden');
+            updatePetDisplay();
+            createStars();
+            init();
+        }
+
+        // Reset Game (нова функція)
+        function resetGame() {
+            // Скидаємо всі статистики
+            state.hunger = 70;
+            state.happiness = 80;
+            state.energy = 60;
+            state.isSleeping = false;
+            
+            // Вимикаємо нічний режим якщо був увімкнений
+            if (document.body.classList.contains('night-mode')) {
+                document.body.classList.remove('night-mode');
+                document.getElementById('screen').classList.remove('night');
+                document.getElementById('petContainer').classList.remove('sleeping');
+            }
+            
+            // Оновлюємо дисплей
+            updateDisplay();
+            updatePetDisplay();
+            
+            // Показуємо повідомлення
+            showMessage('msgReset');
+            
+            // Додаємо невелику анімацію
+            const pet = document.getElementById('petContainer');
+            pet.style.animation = 'none';
+            setTimeout(() => {
+                pet.style.animation = '';
+            }, 100);
+        }
+
+        // Update Pet Display
+        function updatePetDisplay() {
+            const svg = document.getElementById('petSvg');
+            const isSleep = state.isSleeping;
+            svg.innerHTML = petSvgs[state.selectedPet][isSleep ? 'sleep' : 'awake'];
+        }
+
+        // Food Modal
+        function openFoodModal() {
+            if (state.isSleeping) {
+                showMessage('msgRest');
+                return;
+            }
+            document.getElementById('foodModal').classList.remove('hidden');
+        }
+
+        function closeFoodModal() {
+            document.getElementById('foodModal').classList.add('hidden');
+        }
+
+        function selectFood(food, value) {
+            state.selectedFood = food;
+            state.foodValue = value;
+            closeFoodModal();
+            feedPet();
+        }
+
+        // Update Display
+        function updateDisplay() {
+            document.getElementById('hungerBar').style.width = state.hunger + '%';
+            document.getElementById('hungerValue').textContent = state.hunger;
+            document.getElementById('happinessBar').style.width = state.happiness + '%';
+            document.getElementById('happinessValue').textContent = state.happiness;
+            document.getElementById('energyBar').style.width = state.energy + '%';
+            document.getElementById('energyValue').textContent = state.energy;
+        }
+
+        // Show Status Message
+        function showMessage(key) {
+            const msgEl = document.getElementById('statusMessage');
+            msgEl.textContent = translations[state.language][key];
+            msgEl.classList.add('show');
+            setTimeout(() => msgEl.classList.remove('show'), 1500);
+        }
+
+        // Create Floating Hearts
+        function createHearts() {
+            const container = document.getElementById('petContainer');
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = '💖';
+                    heart.style.left = (20 + Math.random() * 15) + 'px';
+                    heart.style.top = '0px';
+                    container.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500);
+                }, i * 200);
+            }
+        }
+
+        // Create Zzz Animation
+        function createZzz() {
+            const container = document.getElementById('petContainer');
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const zzz = document.createElement('div');
+                    zzz.className = 'zzz';
+                    zzz.textContent = 'Z';
+                    zzz.style.top = (-8 - i * 4) + 'px';
+                    container.appendChild(zzz);
+                    setTimeout(() => zzz.remove(), 2000);
+                }, i * 600);
+            }
+        }
+
+        // Actions
+        function feedPet() {
+            if (state.hunger >= 100) {
+                showMessage('lowHunger');
+                return;
+            }
+            const value = state.foodValue || 15;
+            state.hunger = Math.min(100, state.hunger + value);
+            state.energy = Math.min(100, state.energy + 5);
+            
+            const pet = document.getElementById('petContainer');
+            pet.classList.add('eating');
+            showMessage('msgFeed');
+            createHearts();
+            
+            setTimeout(() => pet.classList.remove('eating'), 1500);
+            updateDisplay();
+            state.foodValue = 0;
+        }
+
+        function playWithPet() {
+            if (state.isSleeping) {
+                showMessage('msgRest');
+                return;
+            }
+            if (state.energy <= 10) {
+                showMessage('lowEnergy');
+                return;
+            }
+            state.happiness = Math.min(100, state.happiness + 15);
+            state.energy = Math.max(0, state.energy - 10);
+            state.hunger = Math.max(0, state.hunger - 5);
+            
+            const pet = document.getElementById('petContainer');
+            pet.classList.add('playing');
+            showMessage('msgPlay');
+            createHearts();
+            
+            setTimeout(() => pet.classList.remove('playing'), 1200);
+            updateDisplay();
+        }
+
+        function restPet() {
+            if (state.isSleeping) {
+                // Wake up
+                state.isSleeping = false;
+                document.body.classList.remove('night-mode');
+                document.getElementById('screen').classList.remove('night');
+                document.getElementById('petContainer').classList.remove('sleeping');
+                updatePetDisplay();
+            } else {
+                // Go to sleep
+                state.isSleeping = true;
+                state.energy = Math.min(100, state.energy + 20);
+                state.hunger = Math.max(0, state.hunger - 5);
+                
+                document.body.classList.add('night-mode');
+                document.getElementById('screen').classList.add('night');
+                document.getElementById('petContainer').classList.add('sleeping');
+                showMessage('msgRest');
+                createZzz();
+                updatePetDisplay();
+            }
+            updateDisplay();
+        }
+
+        // Stat Decay
+        function decayStats() {
+            if (!state.isSleeping) {
+                state.hunger = Math.max(0, state.hunger - 2);
+                state.happiness = Math.max(0, state.happiness - 1);
+                state.energy = Math.max(0, state.energy - 1);
+                
+                if (state.hunger < 20) showMessage('lowHunger');
+                else if (state.happiness < 20) showMessage('lowHappy');
+                else if (state.energy < 20) showMessage('lowEnergy');
+                
+                updateDisplay();
+            } else {
+                // Recover energy while sleeping
+                state.energy = Math.min(100, state.energy + 5);
+                state.hunger = Math.max(0, state.hunger - 1);
+                updateDisplay();
+                
+                // Continue Zzz animation while sleeping
+                if (Math.random() > 0.7) createZzz();
+            }
+        }
+
+        // Initialize
+        let intervalId = null;
+        function init() {
+            updateDisplay();
+            if (intervalId) clearInterval(intervalId);
+            intervalId = setInterval(decayStats, 3000);
+        }
+
+        // Закриття модалки кліком поза нею
+        document.addEventListener('DOMContentLoaded', () => {
+            const foodModal = document.getElementById('foodModal');
+            if (foodModal) {
+                foodModal.addEventListener('click', (e) => {
+                    if (e.target === foodModal) {
+                        closeFoodModal();
+                    }
+                });
+            }
+        });
+
+        // Setup initial text
+        updateText();
+    </script>
+</body>
+</html>
