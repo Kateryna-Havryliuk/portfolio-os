@@ -14,8 +14,8 @@ export function render() {
             </div>
             <div class="contact-item">
                 <span class="contact-icon">⎔</span>
-                <a href="https://linkedin.com/in/kateryna-havryliuk" target="_blank">linkedin.com/in/kateryna-havryliuk</a>
-                <span class="copy-hint" data-copy="https://linkedin.com/in/kateryna-havryliuk">[copy]</span>
+                <a href="https://linkedin.com/in/kateryna-havryliuk-link" target="_blank">linkedin.com/in/kateryna-havryliuk-link</a>
+                <span class="copy-hint" data-copy="https://linkedin.com/in/kateryna-havryliuk-link">[copy]</span>
             </div>
             <div class="retro-divider"></div>
             <div class="status-line"><span class="led led-green"></span> STATUS: ONLINE · OPEN FOR WORK</div>
