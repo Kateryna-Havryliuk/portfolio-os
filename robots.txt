@@ -1,0 +1,13 @@
+# robots.txt для Portfolio OS
+# Kateryna Havryliuk — UX Writer & AI Product Writer
+# https://kateryna-havryliuk.github.io/portfolio-os/
+
+User-agent: *
+Allow: /
+
+# Службові файли
+Disallow: /package.json
+Disallow: /README.md
+
+# Sitemap
+Sitemap: https://kateryna-havryliuk.github.io/portfolio-os/sitemap.xml

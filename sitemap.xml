@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap для Portfolio OS
+  Kateryna Havryliuk — UX Writer & AI Product Writer
+  Останнє оновлення: 2026
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Головна (SPA — усе в одному файлі) -->
+  <url>
+    <loc>https://kateryna-havryliuk.github.io/portfolio-os/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Pixel Pet (окрема HTML-сторінка) -->
+  <url>
+    <loc>https://kateryna-havryliuk.github.io/portfolio-os/game.html</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
