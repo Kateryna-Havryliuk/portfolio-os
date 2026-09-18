@@ -6,82 +6,121 @@ import { openWindow } from './windows.js';
 const COMMANDS = {
     help: () => `
 Available commands:
-  whoami      - About Kateryna
-  education   - Education info
-  experience  - Work experience
-  projects    - List projects
-  skills      - Technical skills
-  contact     - Contact information
-  publications- Show publications & conferences
-  papers      - Same as publications
-  github      - GitHub link
-  linkedin    - LinkedIn link
-  open [win]  - Open a window (about, work, skills, terminal, assistant, contact, game)
-  theme [name]- Change theme (classic, matrix, dark, willow)
-  matrix      - Matrix rain effect
-  clear       - Clear terminal
-  echo [text] - Print text
-  date        - Current date/time
-  uptime      - System uptime
-  joke        - Tell a joke
+  whoami        - About Kateryna
+  education     - Education info
+  experience    - Work & projects
+  projects      - List all projects
+  skills        - Technical skills (with bars)
+  seo           - SEO & tools
+  publications  - Publications & conferences
+  contact       - Contact information
+  github        - GitHub link
+  linkedin      - LinkedIn link
+  korstudy      - KORstudy info
+  safeplace     - Safe Place info
+  open [win]    - Open a window
+  theme [name]  - Change theme (classic, matrix, dark, willow)
+  matrix        - Matrix rain effect
+  clear         - Clear terminal
+  echo [text]   - Print text
+  date          - Current date/time
+  uptime        - System uptime
+  joke          - Tell a joke
   `,
 
-    whoami: () => 'Kateryna Havryliuk — Computer Science graduate, Python & AI Developer. GPA: 4.87/5.0.',
-    
+    whoami: () => 'Kateryna Havryliuk — UX Writer & AI Product Writer. Honors CS graduate (GPA 4.87/5.0). Creator of Safe Place & KORstudy. GCI World — University of Tokyo.',
+
     education: () => `
 🎓 Education:
   Lesya Ukrainka Volyn National University
-  Bachelor's Degree in Computer Science & Information Technology
-  GPA: 4.87/5.0
-  Graduated: 2026
+  B.Sc. in Computer Science & Information Technology
+  GPA: 4.87/5.0 · Diploma with Distinction
+  🏆 1st Place — University Scientific Research Competition (2026)
   `,
 
     experience: () => `
 💼 Experience:
-  Freelance Developer (2023–Present)
-    - Web development, AI integration, Python automation
-  Research Assistant (2024–Present)
-    - AI/ML research, data analysis, publication co-author
-  Conference Participant & Author (2024–2026)
-    - Academic conferences, peer-reviewed publications
+  Founder & UX Writer — KORstudy (2024–Present)
+    → Ukrainian Korean-learning platform, SEO, GDPR
+  AI Product Writer & Developer — Safe Place (2025–2026)
+    → Emotion-aware AI, Flask + Gemini API, NLP
+  Technical Writer — Manufacturing Co. (2026)
+    → 3D warehouse docs for non-technical staff
   `,
 
     projects: () => `
 💾 Projects:
-  Safe Place          - AI emotional support web app (Python, Flask, NLP)
-  Bank Budget         - Financial planning & analysis (Excel, Optimization)
-  KORstudy            - Korean language learning platform (HTML, CSS, JS, PHP)
-  ToDo List           - Task management tool (JS, Local Storage)
+  🧠 Safe Place          — Emotion-aware AI web app (2025–2026)
+  🇰🇷 KORstudy           — Korean learning platform (2024–Present)
+  🖥️ Portfolio OS        — Retro OS portfolio (2025–2026)
+  🎮 Pixel Pet           — Virtual pet game (2024)
+  📦 3D Warehouse        — Documentation (2026)
+  📊 Bank Budget 2026    — Analytical writing (2026)
   `,
 
     skills: () => `
-⚡ Skills:
-  Python     ██████████ 90%
-  SQL        ████████░░ 80%
-  Flask      ███████░░░ 75%
-  FastAPI    ██████░░░░ 70%
-  JavaScript ██████░░░░ 65%
-  React      █████░░░░░ 55%
-  Git        ████████░░ 85%
-  OpenAI API ███████░░░ 75%
-  Scala      ███░░░░░░░ 35%
-  Prolog     ███░░░░░░░ 30%
+⚡ Skills (top):
+  UX Writing             ██████████ 90%
+  Copywriting            █████████░ 88%
+  HTML5/CSS3             █████████░ 88%
+  Python                 ████████░░ 85%
+  System Prompt Design   ████████░░ 85%
+  Prompt Engineering     ████████░░ 85%
+  JavaScript             ███████░░░ 75%
+  On-Page SEO            ████████░░ 80%
+  Screaming Frog         ███████░░░ 78%
+  Schema.org / JSON-LD   ████████░░ 80%
+  NLP                    ███████░░░ 72%
+  Emotion Recognition    ███████░░░ 78%
+
+  Type 'skills' in Skills window for the full list.
+  `,
+
+    seo: () => `
+🔍 SEO & Analytics:
+  On-Page SEO · Screaming Frog · Google Search Console
+  Schema.org · JSON-LD · Open Graph · Twitter Cards
+  sitemap.xml · robots.txt · canonical URLs
+  Google Analytics 4 · Consent Mode v2 · GDPR
+  CookieYes (consent banner)
+
+  Full case: KORstudy — 'korstudy' command.
   `,
 
     publications: () => `
 📄 Publications & Conferences:
-  Academic Conference Participant (2024–2026)
-  Author of Peer-Reviewed Publications (2025)
-  Research in data analysis and machine learning
+  1. Interpreted Rule-Based Multimodal Fusion for Emotion Recognition
+     III International Conference, 2026 — Oral presentation
+  2. Safe Place: Generative AI for Mental Health
+     XI Interuniversity Seminar, 2026 — Oral presentation
+  3. Analysis of Dark Mode & Brutalism Aesthetics Impact
+     III International Conference, 2026
+  4. Cyber Hackathons in Education
+     II International Conference, 2025
   `,
 
-    papers: () => COMMANDS.publications(),
-
-    contact: () => '📧 Email: katyagko2004@gmail.com\n🔗 GitHub: github.com/Kateryna-Havryliuk\n🔗 LinkedIn: linkedin.com/in/kateryna-havryliuk',
+    contact: () => '📧 katyagko2004@gmail.com\n🔗 github.com/Kateryna-Havryliuk\n🔗 linkedin.com/in/kateryna-havryliuk\n🌐 easy-korean-learning.netlify.app',
 
     github: () => '🔗 github.com/Kateryna-Havryliuk',
 
     linkedin: () => '🔗 linkedin.com/in/kateryna-havryliuk',
+
+    korstudy: () => `
+🇰🇷 KORstudy:
+  Ukrainian-language Korean-learning platform
+  Live: https://easy-korean-learning.netlify.app/
+  Since: 2024
+  Stack: HTML5, CSS3, Vanilla JS, Bootstrap 5.3
+  SEO: Screaming Frog, Schema.org, JSON-LD, GA4, GDPR
+  `,
+
+    safeplace: () => `
+🧠 Safe Place:
+  Emotion-aware AI web app (2025–2026)
+  Stack: Flask, Google Gemini API, 18 REST endpoints, JWT auth
+  Multimodal emotion recognition (text + voice)
+  +17% accuracy vs text-only · 2 published papers
+  `,
 
     date: () => new Date().toLocaleString('uk-UA'),
 
@@ -92,11 +131,11 @@ Available commands:
 
     joke: () => {
         const jokes = [
-            'Why do programmers prefer dark mode? Because light attracts bugs! 🐛',
-            'What is a programmer\'s favorite place? The cloud ☁️',
-            'Why did the developer go broke? Because he used up all his cache 💸',
-            'What do you call a snake that codes? A Python 🐍',
-            'Why do programmers hate nature? Too many bugs! 🌿'
+            'Why do UX writers hate dark mode? Because users keep asking "where is the button?" 🌙',
+            'What did the SEO specialist say at the party? "I crawled here." 🕷️',
+            'How many prompt engineers does it take to change a light bulb? Just one — but first let me add the right context. 💡',
+            'Why did the copywriter bring a ladder? To reach the higher engagement. 📈',
+            'What is a code reviewer\'s favorite drink? Commit-tea. ☕'
         ];
         return jokes[Math.floor(Math.random() * jokes.length)];
     },
@@ -108,7 +147,7 @@ Available commands:
             openWindow(args[0]);
             return `Opening ${args[0]}...`;
         }
-        return 'Usage: open [window]  (about, work, skills, terminal, assistant, contact, game, notes, explorer)';
+        return 'Usage: open [window]  (about, projects, skills, terminal, assistant, contact, game, notes, explorer, calendar, calculator)';
     },
 
     theme: (args) => {
@@ -129,7 +168,6 @@ Available commands:
     clear: () => ''
 };
 
-// (Matrix effect function remains unchanged)
 function startMatrixEffect() {
     if (window._matrixActive) return;
     window._matrixActive = true;
@@ -182,7 +220,8 @@ export function render() {
     return `
         <div class="terminal-window-retro" id="terminalOutput">
             <div class="term-line">┌─────────────────────────────────────────┐</div>
-            <div class="term-line">│  KATERINA OS/CS v2.0                    │</div>
+            <div class="term-line">│  KATERYNA OS/CS v2.0                    │</div>
+            <div class="term-line">│  UX Writer · AI Product Writer · SEO    │</div>
             <div class="term-line">│  Type 'help' for available commands     │</div>
             <div class="term-line">└─────────────────────────────────────────┘</div>
             <div id="terminalMessages"></div>
