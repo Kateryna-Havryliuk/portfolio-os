@@ -171,7 +171,6 @@ export function render() {
                 <span class="about-uptime" id="systemUptime">🟢 Uptime: 0h 0m</span>
                 <span>📧 katyagko2004@gmail.com</span>
                 <span>🔗 <a href="https://github.com/Kateryna-Havryliuk" target="_blank">GitHub</a></span>
-                <span>🌐 <a href="https://easy-korean-learning.netlify.app/" target="_blank">KORstudy Live</a></span>
             </div>
         </div>
     `;
