@@ -7,8 +7,8 @@ export function render() {
                 <div class="about-avatar">👩‍💻</div>
                 <div class="about-title">
                     <h1>Kateryna Havryliuk</h1>
-                    <p class="about-subtitle">Computer Science Graduate · Python & AI Developer</p>
-                    <div class="about-status"><span class="status-dot"></span> Open for work · Seeking MLH Fellowship</div>
+                    <p class="about-subtitle">UX Writer & AI Product Writer · Developer · SEO</p>
+                    <div class="about-status"><span class="status-dot"></span> Open for work · Remote worldwide</div>
                 </div>
             </div>
 
@@ -17,13 +17,18 @@ export function render() {
                     <h3>🎓 Education</h3>
                     <div class="about-item">
                         <strong>Lesya Ukrainka Volyn National University</strong>
-                        <span>GPA: 4.87/5.0</span>
-                        <p>Bachelor's Degree in Computer Science & Information Technology · 2022–2026</p>
+                        <span>GPA: 4.87/5.0 · Diploma with Distinction</span>
+                        <p>B.Sc. in Computer Science & Information Technology · 2022–2026</p>
+                        <p>🏆 1st Place — University Scientific Research Competition, 2026</p>
                     </div>
                 </div>
 
                 <div class="about-section">
                     <h3>📜 Certifications & Training</h3>
+                    <div class="about-item">
+                        <strong>GCI World — University of Tokyo</strong>
+                        <span>Data Science & Machine Learning · 3-month intensive</span>
+                    </div>
                     <div class="about-item">
                         <strong>HarvardX: Data Science — Machine Learning</strong>
                     </div>
@@ -31,68 +36,73 @@ export function render() {
                         <strong>IBM: Introduction to Generative AI</strong>
                     </div>
                     <div class="about-item">
-                        <strong>Data Engineering and Security Summer School</strong>
-                        <span>Ivan Franko University of Lviv · 120 hrs</span>
+                        <strong>Data Engineering & Security Summer School</strong>
+                        <span>Ivan Franko National University of Lviv · 120 hrs</span>
                     </div>
                     <div class="about-item">
-                        <strong>GlobalLogic Education: IT Choice Course</strong>
-                    </div>
-                    <div class="about-item">
-                        <strong>Oracle Academy — Database Programming</strong>
-                    </div>
-                    <div class="about-item">
-                        <strong>GoIT · Campster · AIT 2023</strong>
-                        <span>Various programming bootcamps & summer schools</span>
+                        <strong>Linux Foundation — Git</strong>
                     </div>
                 </div>
 
                 <div class="about-section">
                     <h3>💼 Experience</h3>
                     <div class="about-item">
-                        <strong>Freelance Developer</strong>
-                        <span>2023 – Present</span>
-                        <p>Web development, AI integration, Python automation, full-stack solutions</p>
-                    </div>
-                    <div class="about-item">
-                        <strong>Research Assistant</strong>
+                        <strong>Founder & UX Writer — KORstudy</strong>
                         <span>2024 – Present</span>
-                        <p>· AI/ML research at university lab</p>
-                        <p>· data analysis</p>
-                        <p>· publication co-author</p>
+                        <p>· Ukrainian-language Korean-learning platform</p>
+                        <p>· 100% of interface copy, 10+ pages</p>
+                        <p>· Technical SEO audit (Screaming Frog, Schema.org, JSON-LD)</p>
+                        <p>· GA4 + Consent Mode v2 · GDPR-compliant</p>
                     </div>
                     <div class="about-item">
-                        <strong>Conference Participant & Author</strong>
-                        <span>2024–2026</span>
-                        <p>· Active participant in academic conferences</p>
-                        <p>· Author of peer-reviewed publications</p>
+                        <strong>AI Product Writer & Developer — Safe Place</strong>
+                        <span>2025–2026</span>
+                        <p>· Full-stack AI web app (Flask, Google Gemini API)</p>
+                        <p>· Multimodal emotion recognition: text + voice</p>
+                        <p>· Wrote every UI string, system prompt, 10 techniques, 4 articles</p>
+                    </div>
+                    <div class="about-item">
+                        <strong>Technical Writer & Developer — Manufacturing Co.</strong>
+                        <span>2026</span>
+                        <p>· 3D warehouse visualization system documentation</p>
+                        <p>· User guides for non-technical staff</p>
                     </div>
                 </div>
 
                 <div class="about-section">
-                    <h3>🚀 Projects</h3>
+                    <h3>🚀 Featured Projects</h3>
                     <div class="about-item">
-                        <strong>Safe Place — Emotional Support Web App</strong>
+                        <strong>Safe Place — Emotion-Aware AI Web App</strong>
+                        <span>2025–2026 · Flagship</span>
+                        <p>· Flask · Google Gemini API · 18 REST endpoints · JWT auth</p>
+                        <p>· Multimodal emotion recognition (text + voice)</p>
+                        <p>· +17% accuracy vs text-only · 4 critical cases, zero false positives</p>
+                        <p>· 2 published papers · 1st place research award</p>
+                    </div>
+                    <div class="about-item">
+                        <strong>KORstudy — Korean Learning Platform</strong>
+                        <span>2024 – Present</span>
+                        <p>· UX Writing · Content Strategy · Technical SEO · Frontend</p>
+                        <p>· 10+ pages, fully in Ukrainian</p>
+                        <p>· JSON-LD, Open Graph, sitemap, robots · GA4 + GDPR</p>
+                    </div>
+                    <div class="about-item">
+                        <strong>3D Warehouse Visualization System</strong>
+                        <span>2026</span>
+                        <p>· 3D navigation for warehouse staff · 1C + Excel integration</p>
+                        <p>· Full technical documentation for non-technical users</p>
+                    </div>
+                    <div class="about-item">
+                        <strong>Portfolio OS — this project</strong>
                         <span>2025–2026</span>
-                        <p>· Generative AI, Python, Flask, NLP</p>
-                        <p>· Full web app with crisis detection and analytics dashboard</p>
+                        <p>· Retro OS interface · draggable windows · terminal · AI assistant</p>
+                        <p>· Vanilla JS, ES modules, no frameworks</p>
                     </div>
                     <div class="about-item">
-                        <strong>Bank Budget Planning & System Analysis</strong>
-                        <span>2025</span>
-                        <p>· Data Analysis, Excel, Optimization</p>
-                        <p>· Approved with distinction, presented to industry experts</p>
-                    </div>
-                    <div class="about-item">
-                        <strong>KORstudy — Korean Language Learning Platform</strong>
+                        <strong>Pixel Pet — Virtual Companion</strong>
                         <span>2024</span>
-                        <p>· HTML, CSS, JavaScript, PHP</p>
-                        <p>· Educational website with structured courses and interactive features</p>
-                    </div>
-                    <div class="about-item">
-                        <strong>ToDo List Web App</strong>
-                        <span>2023</span>
-                        <p>· HTML, CSS, JavaScript, Local Storage · Task management tool with persistent data</p>
-                        <p>· Task management tool with persistent data</p>
+                        <p>· Tamagotchi-style game · bilingual (EN/UA) · animations</p>
+                        <p>· Embedded as iframe inside Portfolio OS</p>
                     </div>
                 </div>
 
@@ -100,19 +110,25 @@ export function render() {
                     <h3>🛠️ Tech Stack</h3>
                     <div class="tech-tags">
                         <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
                         <span class="tech-tag">JavaScript</span>
                         <span class="tech-tag">HTML/CSS</span>
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">R</span>
+                        <span class="tech-tag">Bootstrap</span>
                         <span class="tech-tag">SQL</span>
-                        <span class="tech-tag">Scala</span>
-                        <span class="tech-tag">Prolog</span>
+                        <span class="tech-tag">C++</span>
                         <span class="tech-tag">Git/GitHub</span>
                         <span class="tech-tag">Figma</span>
-                        <span class="tech-tag">Oracle DB</span>
-                        <span class="tech-tag">Wireshark</span>
-                        <span class="tech-tag">Cisco Packet Tracer</span>
+                        <span class="tech-tag">Google Gemini API</span>
+                        <span class="tech-tag">OpenAI API</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Emotion Recognition</span>
+                        <span class="tech-tag">Prompt Engineering</span>
+                        <span class="tech-tag">Screaming Frog</span>
+                        <span class="tech-tag">Schema.org</span>
+                        <span class="tech-tag">JSON-LD</span>
+                        <span class="tech-tag">Google Analytics 4</span>
+                        <span class="tech-tag">1C</span>
+                        <span class="tech-tag">Excel</span>
                     </div>
                 </div>
 
@@ -121,37 +137,32 @@ export function render() {
                     <div class="language-item">
                         <span>🇺🇦 Ukrainian</span>
                         <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
-                        <span>C2</span>
+                        <span>Native</span>
                     </div>
                     <div class="language-item">
                         <span>🇬🇧 English</span>
-                        <div class="lang-bar"><div class="lang-fill" style="width:65%"></div></div>
-                        <span>B1+</span>
+                        <div class="lang-bar"><div class="lang-fill" style="width:70%"></div></div>
+                        <span>B1–B2</span>
                     </div>
                     <div class="language-item">
                         <span>🇵🇱 Polish</span>
-                        <div class="lang-bar"><div class="lang-fill" style="width:65%"></div></div>
-                        <span>B1+</span>
+                        <div class="lang-bar"><div class="lang-fill" style="width:60%"></div></div>
+                        <span>B1</span>
                     </div>
                     <div class="language-item">
                         <span>🇰🇷 Korean</span>
                         <div class="lang-bar"><div class="lang-fill" style="width:20%"></div></div>
-                        <span>A1+</span>
+                        <span>A1–A2</span>
+                    </div>
+                    <div class="language-item">
+                        <span>🇯🇵 Japanese</span>
+                        <div class="lang-bar"><div class="lang-fill" style="width:15%"></div></div>
+                        <span>A1–A2</span>
                     </div>
                     <div class="language-item">
                         <span>🇨🇳 Chinese</span>
                         <div class="lang-bar"><div class="lang-fill" style="width:15%"></div></div>
-                        <span>A1</span>
-                    </div>
-                    <div class="language-item">
-                        <span>🇩🇪 German</span>
-                        <div class="lang-bar"><div class="lang-fill" style="width:15%"></div></div>
-                        <span>A1</span>
-                    </div>
-                    <div class="language-item">
-                        <span>🇯🇵 Japanese</span>
-                        <div class="lang-bar"><div class="lang-fill" style="width:10%"></div></div>
-                        <span>A1</span>
+                        <span>A1–A2</span>
                     </div>
                 </div>
             </div>
@@ -159,8 +170,8 @@ export function render() {
             <div class="about-footer">
                 <span class="about-uptime" id="systemUptime">🟢 Uptime: 0h 0m</span>
                 <span>📧 katyagko2004@gmail.com</span>
-                <span>🔗 github.com/Kateryna-Havryliuk</span>
-                <span>📄 <a href="/resume_Kateryna_Havryliuk.pdf" target="_blank">View Resume</a></span>
+                <span>🔗 <a href="https://github.com/Kateryna-Havryliuk" target="_blank">GitHub</a></span>
+                <span>🌐 <a href="https://easy-korean-learning.netlify.app/" target="_blank">KORstudy Live</a></span>
             </div>
         </div>
     `;
